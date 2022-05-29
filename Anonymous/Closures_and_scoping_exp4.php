@@ -4,9 +4,9 @@
 // calculates the total price of the items in the cart using a
 // closure as a callback.
 class Cart{
- const price_Butter=1.0;
- const price_Milk=3.0;
- const price_Eggs= 6.95;
+ const PRICE_BUTTER=1.0;
+ const PRICE_MILK=3.0;
+ const PRICE_EGGS= 6.95;
  protected $products= [];
  
  public function add($product,$quantity){
@@ -14,16 +14,15 @@ class Cart{
  }
 
  public function getQuantity($product){
-  return isset($this->products[$product])?($this->products[$product]):false;
+  return isset($this->products[$product])?($this->products[$product]):FALSE;
  }
 
  public function getTotal($tax){
   $total=0.00;
   $callback=function($quantity,$product) use($tax,&$total){
-   // $priceParItem= constant(__CLASS__ ."::PRICE_" .strtoupper($product));
      $pricePerItem = constant(__CLASS__ . "::PRICE_" .
                     strtoupper($product));
-   $total+=($pricePerItem*$quantity)*($tax-1.0);
+   $total+=($pricePerItem*$quantity)*($tax+1.0);
   };
   array_walk($this->products,$callback);
   return round($total,2);
@@ -85,5 +84,5 @@ print $my_cart->getTotal(0.05) . "\n";
 // $my_cart->add('eggs', 6);
 
 // Print the total with a 5% sales tax.
-print $my_cart->getTotal(0.05) . "\n";
+// print $my_cart->getTotal(0.05) . "\n";
 // The result is 54.29
